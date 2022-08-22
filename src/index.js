@@ -1,13 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux'
+import { applyMiddleware, legacy_createStore as createStore, compose } from 'redux'
+import thunk from 'redux-thunk'
+import reducers from "./reducers"
+import {  createTheme , ThemeProvider  } from '@mui/material/styles'; 
+import "./index.css"
+
+const theme = createTheme();
+const store = createStore(reducers , compose(applyMiddleware(thunk)));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );
 
